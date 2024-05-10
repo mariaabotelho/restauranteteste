@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-caminho_do_arquivo = "dados_restaurantesduogourmet.xlsx"
+caminho_do_arquivo = "restaurantes_duo_gourmet (1).xlsx"
 df = pd.read_excel(caminho_do_arquivo)
 
 
