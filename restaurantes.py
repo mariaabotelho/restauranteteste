@@ -2,20 +2,25 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 caminho_do_arquivo = "dados_restaurantesduogourmet.xlsx"
+df = pd.read_excel(caminho_do_arquivo)
 
-try:
-    df = pd.read_excel(caminho_do_arquivo)
-except Exception as e:
-    st.error(f"Erro ao carregar o arquivo de dados: {e}")
-    st.stop()
 
+if 'categoria' not in df.columns:
+    st.error("A coluna 'categoria' não foi encontrada. Verifique se o nome está correto.")
+    st.stop()  # Parar execução se a coluna não for encontrada
+
+# pessoa vai selecionar uma categoria
 categoria_selecionada = st.selectbox("Escolha uma categoria:", df['categoria'].unique())
+
 
 dados_filtrados = df[df['categoria'] == categoria_selecionada]
 
+# vai contar restaurantes por bairro na categoria que selecionar
 contagem_por_bairro = dados_filtrados['bairro'].value_counts()
 
+# Criando um gráfico de barras
 st.write(f"Gráfico mostrando a quantidade de restaurantes por bairro na categoria: {categoria_selecionada}")
 plt.figure(figsize=(10, 5))
 plt.bar(contagem_por_bairro.index, contagem_por_bairro.values, color='blue')
